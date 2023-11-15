@@ -1,4 +1,4 @@
-# spring-miniBoard-cluster
+# Spring을 서비스하는 Tomcat을 이중화하자 
 
 이전 게시물에서 spring으로 게시판(miniboard)을 만들고,<br>
 linux 서버에서 tomcat으로 서비스를 했다. <br>
