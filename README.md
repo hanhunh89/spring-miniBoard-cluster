@@ -299,4 +299,8 @@ public class CloudStorageUtil {
     storage.createFrom(blobInfo, Paths.get(filePath+file_name));
   }
 }
+
 ```
+filePath = cloud storage에 올리고 싶은 파일이 위치한 디렉토리
+file_name = cloud storage에 올리고 싶은 파일 이름
+credentialPath = key 파일의 경로(디렉토리+파일이름 까지)
