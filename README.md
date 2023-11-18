@@ -233,4 +233,70 @@ IAM 및 관리자 - 서비스계정 - 서비스 계정 만들기
 cloud storage - 버킷 - 버킷이름 클릭 - 권한 - 엑세스 권한 부여 - 새 주 구성원에 "allUsers" 입력 - 역할선택에 "저장소 객체 뷰어" 입력
 저장
 ```
-##
+## PostDetail.jsp 수정
+이미지를 불러오는 url 을 수정하자
+PostDetail.jsp를 연다. 
+```
+sudo nano  miniboard/WEB-INF/views/PostDetail.jsp
+```
+
+url 을 수정한다.
+```
+<!--
+<img src="<c:url value="/resources/images/${post.getImageName()}"/>" style="width:60%"/>
+-->
+<img src="<c:url value="http://storage.googleapis.com/miniboard-storage/${post.getImageName()}"/>" style="width:60%"/>
+```
+여기서 miniboard-storage는 google cloud storage에서 생성한 bucket의 이름이다. 
+
+## google cloud storage 접속 설정
+pom.xml 설정
+```
+<!--  google cloud storage-->
+<dependency>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-storage</artifactId>
+    <version>2.22.2</version>
+</dependency>
+
+<dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>31.1-jre</version>
+</dependency>
+```
+
+cloud storage에 파일을 넣을 수 있는 class
+```
+package com.springmvc.util;
+
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
+
+public class CloudStorageUtil {
+
+  private static String projectId = "rosy-drake-400902";
+  private static String bucketName = "miniboard-storage";
+  
+
+  // upload file to GCS
+  public static void uploadFile(String filePath, String file_name, String credentialsPath) throws IOException {
+    GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream(credentialsPath))
+            .createScoped("https://www.googleapis.com/auth/cloud-platform");
+    // storage 객체 생성
+    Storage storage = StorageOptions.newBuilder().setProjectId(projectId).setCredentials(credentials).build().getService();
+    // blobid 생성
+    BlobId blobId = BlobId.of(bucketName, file_name);
+    BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+    //파일 업로드
+    storage.createFrom(blobInfo, Paths.get(filePath+file_name));
+  }
+}
+```
