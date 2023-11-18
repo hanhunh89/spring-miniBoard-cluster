@@ -35,7 +35,7 @@
 		<!--  
  		<beans:property name="url" value="jdbc:mysql://localhost:3306/myDB?serverTimezone=UTC"/>  
 		-->
-		<beans:property name="url" value="jdbc:mysql://34.125.101.111:3306/myDB?serverTimezone=UTC"/> 		<beans:property name="username" value="myuser"/>
+		<beans:property name="url" value="jdbc:mysql://10.182.0.3:3306/myDB?serverTimezone=UTC"/> 		<beans:property name="username" value="myuser"/>
 		<beans:property name="password" value="1234"/>
 	</beans:bean>
 	
