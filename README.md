@@ -301,6 +301,12 @@ public class CloudStorageUtil {
 }
 
 ```
-filePath = cloud storage에 올리고 싶은 파일이 위치한 디렉토리
-file_name = cloud storage에 올리고 싶은 파일 이름
-credentialPath = key 파일의 경로(디렉토리+파일이름 까지)
+filePath = cloud storage에 올리고 싶은 파일이 위치한 디렉토리<br>
+file_name = cloud storage에 올리고 싶은 파일 이름<br>
+credentialPath = key 파일의 경로(디렉토리+파일이름 까지)<br>
+
+다 되었다.. 
+이제 tomcat을 이중화해서 사용할 수 있다. 
+하지만 여기에도 문제가 있다. 
+
+sticky session... 이것은 언젠가 다루어 보겟다. 
